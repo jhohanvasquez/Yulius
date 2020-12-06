@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BDFODUNReservasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ApiConfiguraciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uri" Type="nvarchar" MaxLength="200" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="200" />
+          <Property Name="Token" Type="nvarchar" MaxLength="200" />
+          <Property Name="Usuario" Type="nvarchar" MaxLength="200" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="200" />
+          <Property Name="DirectorioVirtual" Type="nvarchar" MaxLength="200" />
+          <Property Name="Visual" Type="bit" Nullable="false" />
+          <Property Name="RutaToken" Type="nvarchar" MaxLength="200" />
+          <Property Name="TipoSeguridad" Type="int" Nullable="false" />
+          <Property Name="EncabezadoToken" Type="nvarchar" MaxLength="200" />
+          <Property Name="EncabezadoUsuario" Type="nvarchar" MaxLength="200" />
+          <Property Name="EncabezadoClave" Type="nvarchar" MaxLength="200" />
+          <Property Name="Prefijo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ApiConfiguraciones_Rutas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdApi" Type="bigint" Nullable="false" />
+          <Property Name="Ruta" Type="nvarchar" MaxLength="250" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" />
+          <Property Name="Identificador" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Function Name="pa_Api_Informacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pidentificador" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="BDFODUNReservasModelStoreContainer">
+          <EntitySet Name="ApiConfiguraciones" EntityType="Self.ApiConfiguraciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApiConfiguraciones_Rutas" EntityType="Self.ApiConfiguraciones_Rutas" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDFODUNReservasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ApiConfiguraciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uri" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Token" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Usuario" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Clave" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DirectorioVirtual" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Visual" Type="Boolean" Nullable="false" />
+          <Property Name="RutaToken" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TipoSeguridad" Type="Int32" Nullable="false" />
+          <Property Name="EncabezadoToken" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EncabezadoUsuario" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EncabezadoClave" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Prefijo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ApiConfiguraciones_Rutas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdApi" Type="Int64" Nullable="false" />
+          <Property Name="Ruta" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Identificador" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="BDFODUNReservasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ApiConfiguraciones" EntityType="Self.ApiConfiguraciones" />
+          <EntitySet Name="ApiConfiguraciones_Rutas" EntityType="Self.ApiConfiguraciones_Rutas" />
+          <FunctionImport Name="pa_Api_Informacion" ReturnType="Collection(BDFODUNReservasModel.pa_Api_Informacion_Result)">
+            <Parameter Name="pidentificador" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="pa_Api_Informacion_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Uri" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Token" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Clave" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="DirectorioVirtual" Nullable="true" MaxLength="200" />
+          <Property Type="Boolean" Name="Visual" Nullable="false" />
+          <Property Type="String" Name="RutaToken" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="TipoSeguridad" Nullable="false" />
+          <Property Type="String" Name="EncabezadoToken" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EncabezadoUsuario" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EncabezadoClave" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Prefijo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ruta" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Identificador" Nullable="true" MaxLength="250" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BDFODUNReservasModelStoreContainer" CdmEntityContainer="BDFODUNReservasEntities">
+          <EntitySetMapping Name="ApiConfiguraciones">
+            <EntityTypeMapping TypeName="BDFODUNReservasModel.ApiConfiguraciones">
+              <MappingFragment StoreEntitySet="ApiConfiguraciones">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Uri" ColumnName="Uri" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="DirectorioVirtual" ColumnName="DirectorioVirtual" />
+                <ScalarProperty Name="Visual" ColumnName="Visual" />
+                <ScalarProperty Name="RutaToken" ColumnName="RutaToken" />
+                <ScalarProperty Name="TipoSeguridad" ColumnName="TipoSeguridad" />
+                <ScalarProperty Name="EncabezadoToken" ColumnName="EncabezadoToken" />
+                <ScalarProperty Name="EncabezadoUsuario" ColumnName="EncabezadoUsuario" />
+                <ScalarProperty Name="EncabezadoClave" ColumnName="EncabezadoClave" />
+                <ScalarProperty Name="Prefijo" ColumnName="Prefijo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApiConfiguraciones_Rutas">
+            <EntityTypeMapping TypeName="BDFODUNReservasModel.ApiConfiguraciones_Rutas">
+              <MappingFragment StoreEntitySet="ApiConfiguraciones_Rutas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdApi" ColumnName="IdApi" />
+                <ScalarProperty Name="Ruta" ColumnName="Ruta" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="pa_Api_Informacion" FunctionName="BDFODUNReservasModel.Store.pa_Api_Informacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDFODUNReservasModel.pa_Api_Informacion_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Uri" ColumnName="Uri" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="DirectorioVirtual" ColumnName="DirectorioVirtual" />
+                <ScalarProperty Name="Visual" ColumnName="Visual" />
+                <ScalarProperty Name="RutaToken" ColumnName="RutaToken" />
+                <ScalarProperty Name="TipoSeguridad" ColumnName="TipoSeguridad" />
+                <ScalarProperty Name="EncabezadoToken" ColumnName="EncabezadoToken" />
+                <ScalarProperty Name="EncabezadoUsuario" ColumnName="EncabezadoUsuario" />
+                <ScalarProperty Name="EncabezadoClave" ColumnName="EncabezadoClave" />
+                <ScalarProperty Name="Prefijo" ColumnName="Prefijo" />
+                <ScalarProperty Name="Ruta" ColumnName="Ruta" />
+                <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
