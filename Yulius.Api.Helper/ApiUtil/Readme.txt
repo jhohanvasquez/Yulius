@@ -1,9 +1,9 @@
 ﻿+---------------------------------------------------------------------------------
 + Información General
 +---------------------------------------------------------------------------------
-Author:         Tatiana Betancur
+Author:         Jhohan Vasquez
 Fecha :         2019-02-28
-Responsable:    Tatiana Betancur
+Responsable:    Jhohan Vasquez
 Actualización:  2019-02-28
 Versión:        2.0
 Descripción:    Utilidad para realizar peticiones a servicios RestFul.

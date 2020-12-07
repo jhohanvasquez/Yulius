@@ -1,11 +1,11 @@
 using AutoMapper;
-using LoginApi;
-using LoginApi.Datos;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Yulius.Helper.Api;
+using Yulius.Helper.Api.Datos;
 
 namespace Utilidades
 {
@@ -79,8 +79,8 @@ namespace Utilidades
         {
             using (BDFODUNReservasEntities contexto = new BDFODUNReservasEntities())
             {
-                pa_Api_Informacion_Result lista = contexto.pa_Api_Informacion(pidentificador: identificador).FirstOrDefault();
-                IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<pa_Api_Informacion_Result, ApiDTO>()).CreateMapper();
+                Yulius.Api.Helper.Datos.pa_Api_Informacion_Result lista = contexto.pa_Api_Informacion(pidentificador: identificador).FirstOrDefault();
+                IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<Yulius.Api.Helper.Datos.pa_Api_Informacion_Result, ApiDTO>()).CreateMapper();
                 return mapper.Map<ApiDTO>(lista);
             }
         }

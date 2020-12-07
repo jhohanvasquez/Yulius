@@ -1,0 +1,273 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+
+    <link rel="icon" type="image/png" href="~/Content/images/index.ico">
+
+    <!-- Jquery -->
+
+    <script src="~/Scripts/jquery-2.1.1.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Datepicker -->
+    <link href="~/Content/css/datepicker.css" rel="stylesheet" />
+
+    <!-- Timepicker -->
+    <link href="~/Content/css/bootstrap-timepicker.css" rel="stylesheet" />
+
+    <!-- Slider -->
+    <link href="~/Content/css/slider.css" rel="stylesheet" />
+
+    <!-- Tag input -->
+    <link href="~/Content/css/jquery.tagsinput.css" rel="stylesheet" />
+
+    <!-- WYSIHTML5 -->
+    <link href="~/Content/css/bootstrap-wysihtml5.css" rel="stylesheet" />
+
+    <!-- Dropzone -->
+    <link href='~/Content/css/dropzone/dropzone.css' rel="stylesheet" />
+
+    <!-- Pace -->
+    <link href="~/Content/css/pace.css" rel="stylesheet">
+
+    <!-- Endless -->
+    <link href="~/Content/css/endless.min.css" rel="stylesheet">
+    <link href="~/Content/css/endless-skin.css" rel="stylesheet">
+
+    <!-- style -->
+    <link href="~/Content/style/style.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="~/Content/Datatables/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/Datatables/css/dataTables.jqueryui.min.css" rel="stylesheet" />
+    <link href="~/Content/Datatables/css/buttons.jqueryui.min.css" rel="stylesheet" />
+
+</head><!--oncontextmenu="return false" ondragstart="return false"-->
+<body class="overflow-hidden">
+    <!-- Overlay Div -->
+    <div id="overlay" class="transparent"></div>
+
+    <!-- /wrapper -->
+    <div id="wrapper" class="preload">
+        <!-- top-nav-->
+        <div id="top-nav" style="background-color: #01C854">
+            <div class="brand">
+                <a href="index.html"><img src="~/Content/images/logo.png" /></a>
+            </div>
+            <!-- /brand -->
+            <button type="button" class="navbar-toggle pull-left" id="sidebarToggle"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <button type="button" class="navbar-toggle pull-left hide-menu" id="menuToggle"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <ul class="nav-notification clearfix">
+                <li class="profile dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span><i class="fa fa-user"></i></span>&nbsp; <span><i class="fa fa-chevron-down"></i></span> </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="clearfix" href="#">
+                                <img src="~/Content/images/profile.png">
+                            </a>
+                        </li>
+                        <li><a tabindex="-1" class="main-link logoutConfirm_open" href="#logoutConfirm"><i class="fa fa-lock fa-lg"></i> Salida Segura</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /top-nav-->
+        <!-- let-nav-->
+        <aside class="skin-1">
+            <div class="sidebar-inner scrollable-sidebars">
+                <div class="logo-nav">
+                    <a rel="nofollow" href="index.html"><img src="~/Content/images/logo-nav.png" /></a>
+                </div>
+                <div class="size-toggle">
+                    <a class="btn btn-sm" id="sizeToggle"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="btn btn-sm pull-right logoutConfirm_open" href="#logoutConfirm"> <i class="fa fa-power-off"></i> </a>
+                </div>
+                <!-- /size-toggle -->
+                <div class="main-menu">
+                    <ul>
+                        <li class="openable open">
+                            <a href="#">
+                                <span class="menu-icon">
+                                    <i class="fa fa-file-text fa-lg"></i>
+                                </span>
+                                <span class="text">
+                                    Maestros
+                                </span>
+                                <span class="pull-right text-primary"><i class="fa fa-sort-down"></i></span>
+                                <span class="menu-hover"></span>
+                            </a>
+                            <ul class="submenu">
+                                <li><a rel="nofollow" onclick="waitingDialog.show('Redirecting, Please Wait...');" href="@Url.Action("Index", "Socio")"><span class="submenu-label">Agregar Socio</span></a></li>
+                                <li><a rel="nofollow" onclick="waitingDialog.show('Redirecting, Please Wait...');" href="@Url.Action("Index", "Servicio")"><span class="submenu-label">Agregar Servicio</span></a></li>
+                                <li><a rel="nofollow" onclick="waitingDialog.show('Redirecting, Please Wait...');" href="@Url.Action("Index", "HistoricoServicio")"><span class="submenu-label">Agregar Historico Servicio</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /main-menu -->
+
+            </div>
+            <!-- /sidebar-inner -->
+        </aside>
+        <!-- /let-nav--->
+
+        <div id="main-container">
+
+            <!-- breadcrumb -->
+            @Html.Raw(ViewBag.MigaPan)
+            <!-- breadcrumb -->
+
+            <br />
+            <div class="col-md-12">
+                <div class="alert-animated">
+                    <div class="alert-inner">
+                        <div class="alert-message">
+                            Welcome Administrator , Your current IP address @Context.Request.UserHostAddress, Fecha @System.DateTime.Now.Date.ToString("dd/MM/yyyy").
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Inicio Contenido -->
+
+            @RenderBody()
+
+            <!--Finaliza Contenido -->
+
+        </div><!-- /main-container -->
+        <!-- footer -->
+        <div class="col-sm-6 centrar">
+            <span class="footer-brand">
+                <strong class="text-primary">Registers</strong>
+            </span>
+            <p>Developer by Jhohan Alexander Vasquez Sierra </p>
+        </div><!-- /.col -->
+
+        <div class="col-sm-12 centrar">
+            <p> This site is best viewed with Internet Explorer 10, Firefox 20, Google Chrome 25 (or higher). With a minimum resolution of 1024 x 768 pixels.</p>
+        </div>
+
+        <!-- /footer -->
+
+    </div>
+    <!-- /wrapper -->
+
+    <a href="" id="scroll-to-top" class="hidden-print"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- Logout confirmation -->
+    <div class="custom-popup light width-100" id="logoutConfirm">
+        <div class="padding-md">
+            <h4 class="m-top-none"> Do you want to go out?</h4>
+        </div>
+
+        <div class="text-center">
+            <a class="btn btn-success m-right-sm" onClick="borrarcookie()" href='@Url.Action("SalidaSegura", "Home")'>Salir</a>
+            <a class="btn btn-danger logoutConfirm_close">Cancel</a>
+        </div>
+    </div>
+    <!--Modal TimeUP -->
+    <div class="modal bg-dark fade" data-backdrop="static" data-add-back-btn="false" data-keyboard="false" id="TimeUP">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>
+                        Detected inactivity
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        No activity detected in the last 3 minutes. <br />
+                        For your safety your session has been closed.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-success" onClick="borrarcookie()" href="@Url.Action("Index", "Home")">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Bootstrap -->
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Datatable -->
+    <script src='~/Content/js/jquery.dataTables.min.js'></script>
+
+    <script src='~/Content/js/chosen.jquery.min.js'></script>
+
+    <!-- Mask-input -->
+    <script src='~/Content/js/jquery.maskedinput.min.js'></script>
+
+    <!-- Datepicker -->
+    <script src='~/Content/js/bootstrap-datepicker.min.js'></script>
+
+    <!-- Timepicker -->
+    <script src='~/Content/js/bootstrap-timepicker.min.js'></script>
+
+    <!-- Slider -->
+    <script src='~/Content/js/bootstrap-slider.min.js'></script>
+
+    <!-- Tag input -->
+    <script src='~/Content/js/jquery.tagsinput.min.js'></script>
+
+    <!-- Dropzone -->
+    <script src='~/Content/js/dropzone.min.js'></script>
+
+    <!-- Parsley -->
+    <script src="~/Content/js/parsley.min.js"></script>
+
+    <!-- MaskMoney -->
+    <script src="~/Content/js/jquery.maskMoney.js"></script>
+
+    <!-- Modernizr -->
+    <script src='~/Content/js/modernizr.min.js'></script>
+
+    <!-- Pace -->
+    <script src='~/Content/js/pace.min.js'></script>
+
+    <!-- Popup Overlay -->
+    <script src='~/Content/js/jquery.popupoverlay.min.js'></script>
+
+    <!-- Slimscroll -->
+    <script src='~/Content/js/jquery.slimscroll.min.js'></script>
+
+    <!-- Cookie -->
+    <script src='~/Content/js/jquery.cookie.min.js'></script>
+
+    <!-- Endless -->
+    <script src="~/Content/js/endless/endless_form.js"></script>
+    <script src="~/Content/js/endless/endless.js"></script>
+
+    <script src="~/Scripts/Util/General.js"></script>
+
+    <link href="~/Content/bootstrap/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <script src="~/Content/bootstrap/js/plugins/toastr/toastr.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="~/Content/Datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Datatables/js/dataTables.jqueryui.min.js"></script>
+    <script src="~/Content/Datatables/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/Datatables/js/buttons.jqueryui.min.js"></script>
+    <script src="~/Content/Datatables/js/jszip.min.js"></script>
+    <script src="~/Content/Datatables/js/pdfmake.min.js"></script>
+    <script src="~/Content/Datatables/js/vfs_fonts.js"></script>
+    <script src="~/Content/Datatables/js/buttons.html5.min.js"></script>
+    <script src="~/Content/Datatables/js/buttons.print.min.js"></script>
+    <script src="~/Content/Datatables/js/buttons.colVis.min.js"></script>
+</body>
+</html>

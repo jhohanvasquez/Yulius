@@ -1,0 +1,84 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Resultado de la Operación</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Endless -->
+    <link href="~/Content/css/endless.min.css" rel="stylesheet">
+
+    <!-- style -->
+    <link href="~/Content/style/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="login-wrapper">
+        <div class="text-center">
+            <div class="logo-nav"><a href="index.html"><img src="~/Content/images/logo-nav.png"/></a>
+            </div>
+        </div>
+    <hr/>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <strong>
+                    Resultado de la Operación
+                </strong>
+            </div>
+        </div>
+        <div class="panel-body">
+            @Html.Raw(ViewBag.Mensaje)
+        </div>
+        <div class="panel-footer">
+            <div class="col-sm-6 centrar">
+                <span class="footer-brand">
+                    <strong class="text-primary">Sistema de Votaciones</strong>
+                </span>
+                <p>&copy; 2016 <strong>Avanco</strong> Desarrollado por <a href="http://www.marketingitsolutions.com">MITS S.A.S.</a> </p>
+            </div><!-- /.col -->
+
+            <div class="col-sm-12 centrar">
+                <p> Este sitio se visualiza mejor con Internet Explorer 10, Firefox 20, Google Chrome 25 (o superiores). Con una resolución mínima de 1024 x 768 pixeles.</p>
+            </div>
+        </div>
+    </div><!-- /panel -->
+    <!-- Bootstrap -->
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src='~/Content/js/modernizr.min.js'></script>
+
+    <!-- Pace -->
+    <script src='~/Content/js/pace.min.js'></script>
+
+    <!-- Popup Overlay -->
+    <script src='~/Content/js/jquery.popupoverlay.min.js'></script>
+
+    <!-- Slimscroll -->
+    <script src='~/Content/js/jquery.slimscroll.min.js'></script>
+
+    <!-- Cookie -->
+    <script src='~/Content/js/jquery.cookie.min.js'></script>
+
+    <!-- Endless Admin -->
+    <script src="~/Content/js/endless/endless_admin.js"></script>
+</body>
+</html>

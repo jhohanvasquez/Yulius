@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "Nuevo Socio";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-header clearfix">
+    <div class="page-title">
+        <h3 class="no-margin"><i class="fa fa-user fa-sm"></i>&nbsp;Nuevo Socio</h3>
+        <span>Crear un Socio.</span>
+    </div>
+</div>
+
+<div class="padding-md">
+    <div class="row">
+
+        <!-- Contenido -->
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <span class="pull-left">
+                        <i class="fa fa-edit"></i>&nbsp;Crear Socio
+                    </span>
+                    <ul class="tool-bar">
+                        <li><a href="#" class="refresh-widget" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Actualizar"><i class="fa fa-refresh"></i></a></li>
+                        <li><a href="#aportes" data-toggle="collapse"><i class="fa fa-arrows-v"></i></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body collapse in">
+                    <!-- body -->
+                    <div class="col-md-12">
+                        <form class="form-horizontal no-margin" id="formValidate" data-validate="parsley">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Socio</label>
+                                        <div class="col-md-6">
+                                            <input id="txtNombre" class="form-control" maxlength="50" pattern="[A-Za-z0-9]+" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-group">
+                                        <div style="text-align:center">
+                                            <a id="btnGuardar" class="btn btn-primary animated-bar">
+                                                <i class="fa fa-save"></i>&nbsp; Save
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </form>
+                        <!-- /body -->
+                    </div>
+                    <div class="loading-overlay">
+                        <i class="loading-icon fa fa-refresh fa-spin fa-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contenido -->
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    $("#btnGuardar").click(function () {
+
+        var txtNombre = $("#txtNombre").val();
+        var token = $("[name=__RequestVerificationToken]").val();
+        var Valido = $("#formValidate").parsley("validate");
+        if (Valido) {
+            $.ajax({
+                dataType: "json",
+                async: false,
+                headers: { "__RequestVerificationToken": token },
+                type: "POST",
+                url: "@Url.Action("GuadarSocio", "Socio")",
+                data: JSON.stringify({ nombre: txtNombre }),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-full-width",
+                        "onclick": null,
+                        "showDuration": "500",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.options.onHidden = function () {
+                        $(location).attr("href", "@Url.Action("Index", "Admin")");
+                    };
+                    toastr.success("Socio registrado con exito.", "Registro Socio");
+                }
+            });
+        }
+    });
+
+</script>
+

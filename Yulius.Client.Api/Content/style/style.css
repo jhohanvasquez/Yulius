@@ -1,0 +1,49 @@
+.btn {
+font-family: 'Open Sans',sans-serif !important;
+
+}
+
+
+input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+    border-radius: 0;
+}
+input[type="radio"] {
+    -webkit-appearance: radio;
+    border-radius: 0;
+}
+.sm{
+	min-width:80px;
+	max-width: 160px;
+	}
+.md{
+	min-width:60px;
+	max-width: 240px;
+	}
+.lg{
+	max-width: 300px;
+	}
+.logo-nav{
+	text-align: center;
+}
+.nombre-User{
+	color: #06528B;
+	font-weight: normal;
+	font-size: 14px;
+}
+.centrar{
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	float: none;
+	}
+.fondo{
+	background-color: #FFC;
+}
+
+
+.transparent{
+	background-color:#f2f2f2;
+	
+	
+	}

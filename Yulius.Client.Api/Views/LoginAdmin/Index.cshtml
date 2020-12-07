@@ -1,0 +1,226 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        Administrator entry
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+
+    <link rel="icon" type="image/png" href="~/Content/images/index.ico">
+    <!-- Jquery -->
+    <script src="~/Content/js/jquery-1.10.2.min.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Pace -->
+    <link href="~/Content/css/pace.css" rel="stylesheet">
+
+    <!-- Endless -->
+    <link href="~/Content/css/endless.min.css" rel="stylesheet">
+    <link href="~/Content/css/endless-skin.css" rel="stylesheet">
+
+    <!-- style -->
+    <link href="~/Content/style/style.css" rel="stylesheet">
+
+    <link href="~/Content/bootstrap/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+</head>
+<body oncontextmenu="return false" ondragstart="return false">
+
+    <!--login modal-->
+    <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="text-center">
+                    <div class="logo-nav"><a href="index.html"><img width="250" height="250" src="~/Content/images/logo-nav.png" /></a></div>
+
+                </div>
+                <div class="modal-header">
+                    <h1 class="text-center">
+                        Administrator entry
+                    </h1>
+                </div>
+                <div class="modal-body">
+                    <form id="Formulario" class="form col-md-12 center-block" autocomplete="off">
+                        <div class="form-group">
+                            <input type="text" id="Usuario" name="Usuario" maxlength="100" class="form-control input-lg" placeholder="Usuario" />
+                        </div>                        
+                        <br />
+                        <div class="form-group">
+                            <input type="button" id="btnContinuar" class="btn btn-primary btn-block" value="Enter" />
+                            <input type="button" id="btnRegresar" class="btn btn-primary btn-block" value="Go back" />
+                        </div>
+                    </form>
+                    <div style="clear:both"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<!-- /.modal -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- Bootstrap -->
+<script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Datatable -->
+<script src='~/Content/js/jquery.dataTables.min.js'></script>
+
+<script src='~/Content/js/chosen.jquery.min.js'></script>
+
+<!-- Mask-input -->
+<script src='~/Content/js/jquery.maskedinput.min.js'></script>
+
+<!-- Datepicker -->
+<script src='~/Content/js/bootstrap-datepicker.min.js'></script>
+
+<!-- Timepicker -->
+<script src='~/Content/js/bootstrap-timepicker.min.js'></script>
+
+<!-- Slider -->
+<script src='~/Content/js/bootstrap-slider.min.js'></script>
+
+<!-- Tag input -->
+<script src='~/Content/js/jquery.tagsinput.min.js'></script>
+
+<!-- Dropzone -->
+<script src='~/Content/js/dropzone.min.js'></script>
+
+<!-- Parsley -->
+<script src="~/Content/js/parsley.min.js"></script>
+
+<!-- MaskMoney -->
+<script src="~/Content/js/jquery.maskMoney.js"></script>
+
+<!-- Modernizr -->
+<script src='~/Content/js/modernizr.min.js'></script>
+
+<!-- Pace -->
+<script src='~/Content/js/pace.min.js'></script>
+
+<!-- Popup Overlay -->
+<script src='~/Content/js/jquery.popupoverlay.min.js'></script>
+
+<!-- Slimscroll -->
+<script src='~/Content/js/jquery.slimscroll.min.js'></script>
+
+<!-- Cookie -->
+<script src='~/Content/js/jquery.cookie.min.js'></script>
+
+<!-- Endless -->
+<script src="~/Content/js/endless/endless_form.js"></script>
+<script src="~/Content/js/endless/endless.js"></script>
+
+<link href="~/Content/bootstrap/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<script src="~/Content/bootstrap/js/plugins/toastr/toastr.min.js"></script>
+
+<script src="~/Scripts/Util/General.js"></script>
+
+<script type="text/javascript">
+    var url = '@Url.Action("Index", "Home")';
+
+    $('#btnContinuar').click(function () {      
+        var user = $("#Usuario").val();
+        if (user.length === 0) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "progressBar": true,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "700",
+                "hideDuration": "1000",
+                "timeOut": "7000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.error("You must type the user.", "User Validation");
+        } else {
+            waitingDialog.show('Redirecting, Please Wait...');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ValidateAdmin", "LoginAdmin")',
+                data: JSON.stringify({ usu: user }),
+                contentType: "application/json; charset=utf-8",
+                datatype: "jsondata",
+                async: "true",
+                success: function (msg) {
+                    if (msg == true) {
+                        var urlAdmin = '@Url.Action("Index", "Admin")';
+                        document.location.href = urlAdmin;                    
+                    } else {
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-full-width",
+                            "onclick": null,
+                            "showDuration": "700",
+                            "hideDuration": "1000",
+                            "timeOut": "7000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr.options.onHidden = function () { window.location.href = url; };
+                        toastr.error('Incorrect username, check.', 'Administrator Validation');
+                    }
+
+                },
+                error: function (res, msg, code) {
+                    var err = eval("(" + res.responseText + ")");
+                    var errorMessage = err.Message;
+                    // errorMessage can be an object with 3 string properties: ExceptionType, Message and StackTrace
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-full-width",
+                        "onclick": null,
+                        "showDuration": "700",
+                        "hideDuration": "1000",
+                        "timeOut": "7000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.options.onHidden = function () { window.location.href = url; };
+                    toastr.error(errorMessage, 'Administrator Validation');
+
+
+                } //error
+            });
+        }
+    });
+
+    $('#btnRegresar').click(function () {
+        window.location.href = url;
+    });
+
+</script>

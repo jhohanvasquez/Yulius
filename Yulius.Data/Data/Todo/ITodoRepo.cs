@@ -8,7 +8,7 @@ using Yulius.Data.Models;
 
 namespace Yulius.Data.Data.Todo
 {
-    public interface IPostRepo
+    public interface ITodoRepo
     {
         Task<Result> TodoSave(UserParams userParams, TodoItem todoItem);
 

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Web;
 
-namespace LoginApi
+namespace Yulius.Helper.Api
 {
     public class LogUtil
     {

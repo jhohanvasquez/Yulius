@@ -1,6 +1,6 @@
 using System.Configuration;
 
-namespace LoginApi
+namespace Yulius.Helper.Api
 {
     /// <summary>
     /// Llaves con datos (rutas) para consumir servicios

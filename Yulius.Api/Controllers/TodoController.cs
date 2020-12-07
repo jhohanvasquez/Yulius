@@ -24,7 +24,7 @@ namespace Yulius.Api.Controllers
     public class TodoController : ControllerBase
     {
 
-        private readonly IPostRepo _repo;
+        private readonly ITodoRepo _repo;
         private readonly IConfiguration Configuration;
         private readonly IMapper _mapper;
 
@@ -36,7 +36,7 @@ namespace Yulius.Api.Controllers
         /// <param name="mapper">This is injected mapper parameter</param>
         public TodoController
          (
-             IPostRepo repo,
+             ITodoRepo repo,
              IConfiguration config,
              IMapper mapper
          )

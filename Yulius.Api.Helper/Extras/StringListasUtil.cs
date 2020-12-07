@@ -1,4 +1,4 @@
-namespace LoginApi
+namespace Yulius.Helper.Api
 {
     public class StringListasUtil
     {

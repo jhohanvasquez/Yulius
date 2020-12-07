@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="yes"?>
+<SMTPSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Fields>
+    <SmtpServer Description="Servidor SMTP">smtp.sendgrid.net</SmtpServer>
+    <SmtpServerUserName Description="Usuario">registros</SmtpServerUserName>
+    <SmtpServerUserEmail Description="Email">jhohan25@hotmail.com</SmtpServerUserEmail>
+    <SmtpServerPassword Description="Contraseña">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</SmtpServerPassword>
+    <ApplicationName Description="Nombre WeApp">Registers</ApplicationName>
+    <SmtpPuerto Description="Puerto">465</SmtpPuerto>
+    <Ssl Description="Ssl">True</Ssl>
+    <Tls Description="Tls">False</Tls>
+    <RequiereAutenticacion Description="RequiereAutenticacion">True</RequiereAutenticacion>
+  </Fields>
+</SMTPSettings>

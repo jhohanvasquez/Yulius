@@ -1,4 +1,4 @@
-using LoginApi;
+using Yulius.Helper.Api;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -212,14 +212,14 @@ namespace Utilidades
                         return null;
                     default:
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > Api_Cliente ", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Api_Cliente ", exception: ex);
                         return null;
                 }
 
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > Api_Cliente ", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Api_Cliente ", exception: ex);
                 return null;
             }
 
@@ -268,7 +268,7 @@ namespace Utilidades
                         if (response.StatusCode != 404)
                         {
                             Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                            new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > FindByUserName> ", exception: ex);
+                            new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > FindByUserName> ", exception: ex);
                         }
                         return new Login_FindByUserName_ResponseDTO()
                         {
@@ -280,7 +280,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_FindByUserName> ", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_FindByUserName> ", exception: ex);
 
                 return new Login_FindByUserName_ResponseDTO()
                 {
@@ -334,7 +334,7 @@ namespace Utilidades
                         };
                     default:
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_ConfirmEmail> ", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_ConfirmEmail> ", exception: ex);
                         return new Login_ResponseDTO()
                         {
                             Message = response.Content,
@@ -345,7 +345,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_ConfirmEmail> ", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_ConfirmEmail> ", exception: ex);
                 return new Login_ResponseDTO()
                 {
                     StatusCode = 500,
@@ -406,7 +406,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > Login", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Login", exception: ex);
                 return new LoginDTO()
                 {
                     StatusCode = 500,
@@ -464,7 +464,7 @@ namespace Utilidades
                         };
                     default:
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_Register> ", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_Register> ", exception: ex);
 
                         return new Login_ResponseDTO()
                         {
@@ -476,7 +476,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_Register> ", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_Register> ", exception: ex);
                 return new Login_ResponseDTO()
                 {
                     Message = "Error del sistema",
@@ -534,7 +534,7 @@ namespace Utilidades
                         break;
                     default:
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > GetClienteById ", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > GetClienteById ", exception: ex);
                         message = response.Content;
                         break;
                 }
@@ -549,7 +549,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > GetClienteById ", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > GetClienteById ", exception: ex);
 
                 // Retorno
                 return new Login_GetClienteById_ResponseDTO()
@@ -612,7 +612,7 @@ namespace Utilidades
                         };
                     default:
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > SendConfirmCode", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > SendConfirmCode", exception: ex);
                         return new Login_SendConfirmCode_ResponseDTO()
                         {
                             Message = response.Content,
@@ -623,7 +623,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > SendConfirmCode", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > SendConfirmCode", exception: ex);
                 return new Login_SendConfirmCode_ResponseDTO()
                 {
                     StatusCode = 500,
@@ -681,7 +681,7 @@ namespace Utilidades
                         };
                     default:
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > ChangePassword", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > ChangePassword", exception: ex);
                         return new Login_ResponseDTO()
                         {
                             Message = response.Content,
@@ -692,7 +692,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > ChangePassword", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > ChangePassword", exception: ex);
                 return new Login_ResponseDTO()
                 {
                     StatusCode = 500,
@@ -756,7 +756,7 @@ namespace Utilidades
                         };
                     default:
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > ResetPassword", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > ResetPassword", exception: ex);
                         return new Login_ResponseDTO()
                         {
                             Message = response.Content,
@@ -767,7 +767,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > ResetPassword", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > ResetPassword", exception: ex);
                 return new Login_ResponseDTO()
                 {
                     StatusCode = 500,
@@ -820,7 +820,7 @@ namespace Utilidades
                         };
                     default:
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > ForgotPassword", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > ForgotPassword", exception: ex);
                         return new Login_ForgotPassword_ResponseDTO()
                         {
                             Message = response.Content,
@@ -831,7 +831,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > ForgotPassword", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > ForgotPassword", exception: ex);
                 return new Login_ForgotPassword_ResponseDTO()
                 {
                     StatusCode = 500,
@@ -899,7 +899,7 @@ namespace Utilidades
                         if (response.StatusCode != 404)
                         {
                             Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                            new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_DeleteOTP> ", exception: ex);
+                            new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_DeleteOTP> ", exception: ex);
                         }
                         return new Login_ResponseDTO()
                         {
@@ -910,7 +910,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_DeleteOTP> ", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_DeleteOTP> ", exception: ex);
 
                 return new Login_ResponseDTO()
                 {
@@ -983,7 +983,7 @@ namespace Utilidades
 
                         // Al ser un StatusCode distinto a los establecidos, se guarda en el log lo que retorna el api.
                         Exception ex = new Exception($"{response.StatusCode}, {response.Content}");
-                        new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_GetOTP> ", exception: ex);
+                        new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_GetOTP> ", exception: ex);
 
                         return new Login_GetOTP_ResponseDTO()
                         {
@@ -994,7 +994,7 @@ namespace Utilidades
             }
             catch (Exception ex)
             {
-                new LogUtil().GuardarLog(modulo: "Utilidades > LoginApi > LoginApi_GetOTP> ", exception: ex);
+                new LogUtil().GuardarLog(modulo: "Utilidades > Yulius.Helper.Api > Yulius.Helper.Api_GetOTP> ", exception: ex);
 
                 return new Login_GetOTP_ResponseDTO()
                 {
