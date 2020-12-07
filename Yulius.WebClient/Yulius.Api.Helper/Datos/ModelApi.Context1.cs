@@ -16,10 +16,10 @@ namespace Yulius.Api.Helper.Datos
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class BDFODUNReservasEntities : DbContext
+    public partial class BDYulius : DbContext
     {
-        public BDFODUNReservasEntities()
-            : base("name=BDFODUNReservasEntities")
+        public BDYulius()
+            : base("name=BDYulius")
         {
         }
     

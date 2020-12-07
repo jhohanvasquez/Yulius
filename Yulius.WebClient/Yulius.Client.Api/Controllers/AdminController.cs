@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Yulius.Client.Api.Filters;
 
 namespace Yulius.Client.Api.Controllers
 {
     public class AdminController : Controller
     {
-       
+       [AutenticacionAdmin]
         public ActionResult Index()
         {
             ViewBag.MigaPan = @"<div id='breadcrumb'>

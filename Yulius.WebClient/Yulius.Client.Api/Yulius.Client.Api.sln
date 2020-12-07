@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yulius.Client.Api", "Yulius.Client.Api.csproj", "{AD55076D-C253-446E-926D-B51B4E699296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yulius.Helper.Api", "..\Yulius.Api.Helper\Yulius.Helper.Api.csproj", "{18AB0163-6A32-4482-B753-30B9013B62DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD55076D-C253-446E-926D-B51B4E699296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD55076D-C253-446E-926D-B51B4E699296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD55076D-C253-446E-926D-B51B4E699296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD55076D-C253-446E-926D-B51B4E699296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18AB0163-6A32-4482-B753-30B9013B62DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18AB0163-6A32-4482-B753-30B9013B62DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18AB0163-6A32-4482-B753-30B9013B62DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18AB0163-6A32-4482-B753-30B9013B62DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2419E6C-434B-455A-A9BD-BBA298EAF7A5}
+	EndGlobalSection
+EndGlobal

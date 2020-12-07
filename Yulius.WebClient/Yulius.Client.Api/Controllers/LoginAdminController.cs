@@ -4,13 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
-using Yulius.Client.Api.ServiceTest;
+using Utilidades;
+using Yulius.Client.Api.Filters;
 using static System.Web.Security.FormsAuthentication;
 
 namespace Yulius.Client.Api.Controllers
 {
     public class LoginAdminController : Controller
     {
+        private ApiUtilLogin oApilogin = new ApiUtilLogin();
         // GET: LoginAdmin
         public ActionResult Index()
         {
@@ -23,19 +25,15 @@ namespace Yulius.Client.Api.Controllers
         /// <param name="usu"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public JsonResult ValidateAdmin(string usu)
+        public JsonResult ValidateAdmin(string usu, string pass)
         {
-            bool result = false;
-
-            using (ServiceTestClient oService = new ServiceTestClient())
+            var resultTask = oApilogin.Login(usu, pass);
+            resultTask.Wait();
+            if (resultTask.IsCompleted && resultTask.Result != null)
             {
-                result = oService.GetUser(usu);
-                if (result)
-                {
-                    Session["LogonAdmin"] = usu;
-                }
-                return Json(result, JsonRequestBehavior.AllowGet);
+                Session["LogonAdmin"] = usu;
             }
+            return Json(resultTask, JsonRequestBehavior.AllowGet);
         }
     }
 }

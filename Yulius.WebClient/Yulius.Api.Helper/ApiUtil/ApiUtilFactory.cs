@@ -77,7 +77,7 @@ namespace Utilidades
         /// <returns>Datos del api</returns>
         public static ApiDTO API(string identificador)
         {
-            using (BDFODUNReservasEntities contexto = new BDFODUNReservasEntities())
+            using (BDYulius contexto = new BDYulius())
             {
                 Yulius.Api.Helper.Datos.pa_Api_Informacion_Result lista = contexto.pa_Api_Informacion(pidentificador: identificador).FirstOrDefault();
                 IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<Yulius.Api.Helper.Datos.pa_Api_Informacion_Result, ApiDTO>()).CreateMapper();

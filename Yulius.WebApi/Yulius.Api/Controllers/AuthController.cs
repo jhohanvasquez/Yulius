@@ -66,25 +66,11 @@ namespace Yulius.Api.Controllers
                 //---------------------------- login ---
                 Result result = new Result();
 
-                result = await _repo.Login(userForLoginDTO.Email,
+                result = await _repo.Login(userForLoginDTO.Username,
                                            userForLoginDTO.Password);
 
-                //--------------------------- /login ---
-           
-
-
                 if (result.ResultCode < 0)
-                {
-                    //return Unauthorized();  //core 2.1
-
-                    //return Unauthorized(      //core 2.2
-                    //new ResultDTO
-                    //{
-                    //    resultCode = result.RESULT_CODE,
-                    //    resultMessage = result.RESULT_MESSAGE
-                    //});
-
-
+                {                  
                     return Ok(new ResultDTO
                     {                        
                         ResultCode = result.ResultCode.ToString(),
@@ -118,14 +104,16 @@ namespace Yulius.Api.Controllers
                     };
 
                     var secretKey = Configuration.GetConnectionString("securityKey");
+                    var expireTime = Configuration.GetConnectionString("JWT_EXPIRE_MINUTES");
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
                     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
+                        NotBefore = DateTime.UtcNow,
                         Subject = new ClaimsIdentity(claims),
-                        Expires = DateTime.Now.AddHours(1),
+                        Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(expireTime)),
                         SigningCredentials = creds
                     };
 

@@ -58,6 +58,7 @@
                     <form id="Formulario" class="form col-md-12 center-block" autocomplete="off">
                         <div class="form-group">
                             <input type="text" id="Usuario" name="Usuario" maxlength="100" class="form-control input-lg" placeholder="Usuario" />
+                            <input type="password" id="Clave" name="Clave" maxlength="100" class="form-control input-lg" placeholder="Clave" />
                         </div>                        
                         <br />
                         <div class="form-group">
@@ -139,6 +140,7 @@
 
     $('#btnContinuar').click(function () {      
         var user = $("#Usuario").val();
+        var passWord = $("#Clave").val();
         if (user.length === 0) {
             toastr.options = {
                 "closeButton": true,
@@ -156,12 +158,30 @@
                 "hideMethod": "fadeOut"
             }
             toastr.error("You must type the user.", "User Validation");
-        } else {
+        } else if (passWord.length === 0) {            
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-full-width",
+                    "onclick": null,
+                    "showDuration": "700",
+                    "hideDuration": "1000",
+                    "timeOut": "7000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.error("You must type the user.", "User Validation");
+        } else
+        {
             waitingDialog.show('Redirecting, Please Wait...');
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ValidateAdmin", "LoginAdmin")',
-                data: JSON.stringify({ usu: user }),
+                data: JSON.stringify({ usu: user,pass: passWord }),
                 contentType: "application/json; charset=utf-8",
                 datatype: "jsondata",
                 async: "true",

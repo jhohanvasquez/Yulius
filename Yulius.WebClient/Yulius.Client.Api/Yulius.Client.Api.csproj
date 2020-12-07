@@ -125,11 +125,9 @@
     <Compile Include="App_Start\ValidateAntiForgeryTokenOnAllPosts.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\HistoricoServicioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginAdminController.cs" />
-    <Compile Include="Controllers\ServicioController.cs" />
-    <Compile Include="Controllers\SocioController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\UtilController.cs" />
     <Compile Include="Filters\AllowCrossSiteAttribute.cs" />
     <Compile Include="Filters\AutenticacionAdmin.cs" />
@@ -1779,14 +1777,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
-    <Content Include="Views\HistoricoServicio\Index.cshtml" />
     <Content Include="Views\Home\PaginaError.cshtml" />
     <Content Include="Views\LoginAdmin\Index.cshtml" />
-    <Content Include="Views\Servicio\Index.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Socio\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1810,6 +1806,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\xml\smtpSettings.xml.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Yulius.Api.Helper\Yulius.Helper.Api.csproj">
+      <Project>{18ab0163-6a32-4482-b753-30b9013b62dc}</Project>
+      <Name>Yulius.Helper.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
