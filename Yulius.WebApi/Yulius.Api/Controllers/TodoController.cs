@@ -21,6 +21,7 @@ namespace Yulius.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowAll")]
+    [Authorize]
     public class TodoController : ControllerBase
     {
 

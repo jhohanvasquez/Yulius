@@ -1,3 +1,4 @@
+using Antlr.Runtime;
 using AutoMapper;
 using Newtonsoft.Json;
 using System;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Yulius.Helper.Api;
 using Yulius.Helper.Api.Datos;
+using static Utilidades.ApiUtilLogin;
 
 namespace Utilidades
 {
@@ -20,11 +22,12 @@ namespace Utilidades
         /// </summary>
         /// <param name="api">Credenciales de usuario necesarios según el tipo de seguridad.</param>
         /// <returns>Instancia de ApiUtil</returns>
-        public static async Task<ApiUtil> GetApiUtil(ApiDTO api)
+        public static async Task<ApiUtil> GetApiUtil(ApiDTO api, string userLogin, string passwordLogin)
         {
 
             string parametros = api.Parametros;
             api = API(identificador: api.Identificador);
+
             if (!string.IsNullOrEmpty(parametros))
             {
                 api.Ruta = string.Format(api.Ruta, new StringListasUtil().ConvertirStringEnLista(parametros));
@@ -49,14 +52,12 @@ namespace Utilidades
                     });
                     break;
                 case TipoSeguridad.UserPassToken:
-                    // Credenciales para solicitar el token.
-                    List<KeyValuePair<string, string>> credenciales = new List<KeyValuePair<string, string>>
-                    {
-                        new KeyValuePair<string, string>("grant_type", "password"),
-                        new KeyValuePair<string, string>($"{api.EncabezadoUsuario}", api.Usuario),
-                        new KeyValuePair<string, string>($"{api.EncabezadoClave}", api.Clave)
-                    };
-                    ResponseDTO respuestaToken = await apiUtil.SendRequestPostAsync(credenciales, api.RutaToken);
+                    // Credenciales para solicitar el token.                   
+                    Login_UserDTO oData = new Login_UserDTO();
+                    oData.Username = userLogin;
+                    oData.Password = passwordLogin;
+
+                    var respuestaToken = await apiUtil.SendRequestPostAsync(oData);
                     if (respuestaToken.StatusCode == 200)
                     {
                         TokenDTO token = JsonConvert.DeserializeObject<TokenDTO>(respuestaToken.Content);

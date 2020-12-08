@@ -8,13 +8,8 @@ namespace Yulius.Helper.Api
     public class KeyConfig_API
     {      
 
-        #region Url Apis Login
-
+        #region Apis Login
         public static bool AutentificadorUniversal = bool.Parse(ConfigurationManager.AppSettings["AutentificadorUniversal"]);
-
-        public static string Url_Login_Register = "Login.Register";
-        public static string Url_Login_Auth = "Login.Auth";
-
         // Codigo del sitio al registrarse en el administrador del autentificador universal.
         public static int? SourceAutentificador = int.Parse(ConfigurationManager.AppSettings["SourceAutentificador"]);
         public static bool? NotifiqueAutentificador = bool.Parse(ConfigurationManager.AppSettings["NotifiqueAutentificador"]);

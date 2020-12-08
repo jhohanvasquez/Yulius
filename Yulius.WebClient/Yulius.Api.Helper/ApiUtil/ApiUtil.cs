@@ -101,12 +101,11 @@ namespace Utilidades
             {
                 // Se agrega la dirección del dominio al cliente.
                 client.BaseAddress = new Uri(_uri);
-
                 // Se agregar los Headers a la petición
                 foreach (KeyValuePair<string, string> header in Headers) client.DefaultRequestHeaders.Add(header.Key, header.Value);
 
                 // Se hace la petición post, y se guarda la respuesta.
-                response = await client.PostAsync(_url, content);
+                response = client.PostAsync(_url, content).Result;
             }
 
             // Variable retorno
@@ -122,13 +121,13 @@ namespace Utilidades
         /// <summary>
         /// Envía una collección de pares clave/valor en el cuerpo de la peticion POST.
         /// </summary>
-        /// <param name="encodedContent">Contenido encode que se envía usando el tipo application/x-www-form-urlencoded MIME.</param>
+        /// <param name="encodedContent">Contenido encode que se envía usando el tipo application/json MIME.</param>
         /// <param name="url">Url a la que se realiza la petición.</param>
         /// <returns>Retorna un código StatusCode estandar Http y un String con el contenidos de la respuesta.</returns>
         public async Task<ResponseDTO> SendRequestPostAsync(List<KeyValuePair<string, string>> encodedContent, string url)
         {
-            //Se indica el tipo de contenido (Content-Type). El contenido se envía como parte de la url.
-            FormUrlEncodedContent contentUrl = new FormUrlEncodedContent(encodedContent);
+            var json = JsonConvert.SerializeObject(encodedContent); // or JsonSerializer.Serialize if using System.Text.Json
+            var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json"); // use MediaTypeNames.Application.Json in Core 3.0+ and Standard 2.1+
 
             //Se construye la url        
             url = string.Concat(_virtualDirectory, url);
@@ -139,7 +138,7 @@ namespace Utilidades
             {
                 //Se hace el request al web api
                 client.BaseAddress = new Uri(_uri);
-                response = await client.PostAsync(url, contentUrl);
+                response = await client.PostAsync(url, stringContent);
             }
 
             // Variable retorno

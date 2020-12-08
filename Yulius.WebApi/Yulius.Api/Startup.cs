@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -19,9 +20,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Owin;
+using Swashbuckle.Application;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.Swagger;
 using Yulius.Data.Data.Auth;
 using Yulius.Data.Data.Todo;
 using Yulius.Data.Extensions;
+using Yulius.Api.Filter;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace Yulius.Api
 {
@@ -38,11 +46,13 @@ namespace Yulius.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
             SecretKey = Configuration.GetConnectionString("securityKey");
 
             services.AddControllers();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);           
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             //services.AddAutoMapper();
 
@@ -50,7 +60,7 @@ namespace Yulius.Api
                 cfg =>
                 {
 
-                });          
+                });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -73,6 +83,7 @@ namespace Yulius.Api
                         Url = new Uri("https://example.com/license"),
                     }
                 });
+                c.OperationFilter<AuthorizationOperationFilter>();
             });
 
             // service Extensions setting CORS
@@ -81,17 +92,18 @@ namespace Yulius.Api
             // Service Extensions setting Connection Database SqlServer Docker
             services.ConfigDatabase(Configuration, SecretKey);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                  .AddJwtBearer(options =>
-                  {
-                      options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                      {
-                          ValidateIssuerSigningKey = true,
-                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey)),
-                          ValidateIssuer = false,
-                          ValidateAudience = false
-                      };
-                  });
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+                    .RequireAuthenticatedUser().Build());
+            });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,8 +117,10 @@ namespace Yulius.Api
             {
                 //--- for global handler  ----
 
-                app.UseExceptionHandler(builder => {
-                    builder.Run(async context => {
+                app.UseExceptionHandler(builder =>
+                {
+                    builder.Run(async context =>
+                    {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                         var error = context.Features.Get<IExceptionHandlerFeature>();
@@ -127,11 +141,43 @@ namespace Yulius.Api
 
             app.UseRouting();
 
+            app.UseExceptionHandler(appBuilder =>
+            {
+                appBuilder.Use(async (context, next) =>
+                {
+                    var error = context.Features[typeof(IExceptionHandlerFeature)] as IExceptionHandlerFeature;
+
+                    //when authorization has failed, should retrun a json message to client
+                    if (error != null && error.Error is SecurityTokenExpiredException)
+                    {
+                        context.Response.StatusCode = 401;
+                        context.Response.ContentType = "application/json";
+
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+                        {
+                            State = "Unauthorized",
+                            Msg = "token expired"
+                        }));
+                    }
+                    //when orther error, retrun a error message json to client
+                    else if (error != null && error.Error != null)
+                    {
+                        context.Response.StatusCode = 500;
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+                        {
+                            State = "Internal Server Error",
+                            Msg = error.Error.Message
+                        }));
+                    }
+                    //when no error, do next.
+                    else await next();
+                });
+            });
+
+            app.UseCors("policy");
+
             app.UseAuthorization();
-
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
@@ -140,7 +186,8 @@ namespace Yulius.Api
 
             app.UseSwagger();
             app.UseSwaggerUI(
-                    c => {
+                    c =>
+                    {
                         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Core API Docs");
                     }
                 );

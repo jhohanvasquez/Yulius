@@ -11,6 +11,9 @@ using Yulius.Data.DTOs;
 using Yulius.Data.Models;
 using Yulius.Data.Data.Auth;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc.Core;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Yulius.Api.Controllers
 {
@@ -18,7 +21,8 @@ namespace Yulius.Api.Controllers
     /// Login and register service
     /// </summary>
     [Route("api/[controller]")]
-    [ApiController]    
+    [ApiController]   
+    [EnableCors("AllowAll")]    
     public class AuthController : ControllerBase
     {
 
@@ -45,7 +49,7 @@ namespace Yulius.Api.Controllers
         }
 
 
-        // http://localhost:5000/api/auth/login
+        // https://localhost:44358/api/auth/login
         /// <summary>
         /// This method returns JWT so that it can be used in header of requests.         
         /// </summary>
@@ -56,7 +60,8 @@ namespace Yulius.Api.Controllers
         /// If the ResultCode in Result object is positive it means operation is successfull.
         /// If the ResultCode in Result object is negative it means operation is unsuccessfull.
         /// In failure case developer can show the ResultMessage to the end user
-        /// </returns>
+        /// </returns>   
+        [AllowAnonymous]
         [HttpPost("Login")]        
         public async Task<IActionResult> Login(UserForLoginDTO userForLoginDTO)
         {            
@@ -79,7 +84,7 @@ namespace Yulius.Api.Controllers
                     
                 }
                 else
-                {                   
+                {
 
                     UserForListDTO userForListDTO = new UserForListDTO();
                     var resultUser = (User)result.obj;
@@ -92,50 +97,10 @@ namespace Yulius.Api.Controllers
                     userForListDTO.Role = resultUser.Role;
                     userForListDTO.City = resultUser.City;
 
-                    string UserDatatoCreateToken = userForListDTO.UserId.ToString() + "," +
-                                                   userForListDTO.Email.ToString();
-
-                    var claims = new[]
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, userForListDTO.UserId.ToString()),
-                        new Claim(ClaimTypes.Name, userForListDTO.Email),
-                        new Claim(ClaimTypes.UserData, UserDatatoCreateToken),
-                        new Claim(ClaimTypes.Role, userForListDTO.Role)
-                    };
-
-                    var secretKey = Configuration.GetConnectionString("securityKey");
-                    var expireTime = Configuration.GetConnectionString("JWT_EXPIRE_MINUTES");
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                    var tokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        NotBefore = DateTime.UtcNow,
-                        Subject = new ClaimsIdentity(claims),
-                        Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(expireTime)),
-                        SigningCredentials = creds
-                    };
-
-                    var tokenHandler = new JwtSecurityTokenHandler();
-
-                    var token = tokenHandler.CreateToken(tokenDescriptor);
-
+                    var token = TokenGenerator.GenerateTokenJwt(userForLoginDTO.Username, userForLoginDTO.Password);
                     //mapper could be used
                     //var user = _mapper.Map<UserForListDTO>(UserFromRepo);
-                  
-
-                    return Ok(new ResultDTO
-                    {                        
-                        ResultCode = result.ResultCode.ToString(),
-                        ResultMessage = result.ResultMessage,
-                        ResultJSONobj = new
-                        {
-                            token = tokenHandler.WriteToken(token),
-                            userForListDTO
-                        }
-                    });
-
+                    return base.Ok(ResultMethod(result, userForListDTO, token));
 
                 }//else
 
@@ -154,122 +119,18 @@ namespace Yulius.Api.Controllers
 
         }// Login
 
-
-        /// <summary>
-        /// This method is used to register end user
-        /// </summary>
-        /// <param name="userForRegisterDTO">This parameter must be filled to register</param>
-        /// <returns>This API method return 200 for each case. Developer should check the ResultCode in Result object</returns>
-        [Authorize(Roles = "Administrator")]
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register(UserForRegisterDTO userForRegisterDTO)
+        private static ResultDTO ResultMethod(Result result, UserForListDTO userForListDTO, string token)
         {
-
-            try
+            return new ResultDTO
             {
-                Result result = new Result();
-
-                User user = new User()
+                ResultCode = result.ResultCode.ToString(),
+                ResultMessage = result.ResultMessage,
+                ResultJSONobj = new
                 {
-                    UserId = 0,
-                    Email  = userForRegisterDTO.Email,
-                    PasswordHash = "",                    
-                    FirstName = userForRegisterDTO.FirstName,
-                    LastName = userForRegisterDTO.LastName,
-                    City = userForRegisterDTO.City,
-                    CountryId = userForRegisterDTO.CountryId,
-                    Role = userForRegisterDTO.Role
-                };
-
-                result = await _repo.Register(user, userForRegisterDTO.Password );
-
-                //--------------------------- /register ---
-
-
-
-                if (result.ResultCode < 0)
-                {                   
-                    return Ok(new ResultDTO
-                    {                        
-                        ResultCode = result.ResultCode.ToString(),
-                        ResultMessage = result.ResultMessage
-                    });                    
+                    token,
+                    userForListDTO
                 }
-                else
-                {
-                    UserForListDTO userForListDTO = new UserForListDTO()
-                    {
-                        UserId = ((User)result.obj).UserId,
-                        Email = ((User)result.obj).Email,
-                        FirstName = ((User)result.obj).FirstName,
-                        LastName = ((User)result.obj).LastName,
-                        Role = ((User)result.obj).Role
-                    };
-
-                    return Ok(new ResultDTO
-                    {
-                        ResultCode = result.ResultCode.ToString(),
-                        ResultMessage = result.ResultMessage,
-                        ResultJSONobj = new
-                        {                           
-                            userForListDTO
-                        }
-                    });
-
-
-                }//else
-
-            }
-            catch (Exception ex)
-            {
-                //return StatusCode(500, ex.Message);
-
-                return Ok(new ResultDTO
-                {
-                    ResultCode = "-500",
-                    ResultMessage = ex.Message
-                });
-
-            }
-
-        }// Register
-
-
-
-
-
-        //// GET: api/Auth
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET: api/Auth/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST: api/Auth
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Auth/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
-
-
+            };
+        }
     }
 }

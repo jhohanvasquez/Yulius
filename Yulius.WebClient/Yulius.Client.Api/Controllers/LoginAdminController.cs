@@ -31,7 +31,11 @@ namespace Yulius.Client.Api.Controllers
             resultTask.Wait();
             if (resultTask.IsCompleted && resultTask.Result != null)
             {
-                Session["LogonAdmin"] = usu;
+                if(resultTask.Result.StatusCode == 200)
+                {
+                    Session["LogonAdmin"] = usu;
+                    Session["Token"] = resultTask.Result.Token;
+                }                
             }
             return Json(resultTask, JsonRequestBehavior.AllowGet);
         }

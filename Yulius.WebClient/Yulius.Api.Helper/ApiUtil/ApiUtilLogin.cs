@@ -1,17 +1,14 @@
 using Yulius.Helper.Api;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Utilidades
 {
     public class ApiUtilLogin
     {
-              
-          
+
+
         /// <summary>
         /// Clase con el Response estandar de un api
         /// </summary>
@@ -19,6 +16,7 @@ namespace Utilidades
         {
             public int StatusCode { get; set; }
             public string Message { get; set; }
+            public string Token { get; set; }
         }
 
         /// <summary>
@@ -26,14 +24,8 @@ namespace Utilidades
         /// </summary>
         public class Login_UserDTO
         {
-            public int UserId { get; set; }
-            public string Email { get; set; }
-            public string PasswordHash { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string City { get; set; }
-            public int CountryId { get; set; }
-            public string Role { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
         }
 
         /// <summary>
@@ -58,7 +50,7 @@ namespace Utilidades
         {
             public Login_UserDTO Datos { get; set; }
         }
-        
+
 
         /// <summary>
         /// Clase para retorno para el inicio de sesion.
@@ -87,7 +79,7 @@ namespace Utilidades
                 ApiDTO api = new ApiDTO
                 {
                     // Identificador ruta
-                    Identificador = KeyConfig_API.Url_Login_Auth
+                    Identificador = "Login.Auth"
                 };
 
                 // Consulta en la base de datos los datos del api.
@@ -99,23 +91,22 @@ namespace Utilidades
                     _url = api.Ruta,
                 };
 
-                // Credenciales para solicitar el token.
-                List<KeyValuePair<string, string>> credenciales = new List<KeyValuePair<string, string>>
+                // Credenciales para solicitar el token.                   
+                Login_UserDTO oData = new Login_UserDTO
                 {
-                    new KeyValuePair<string, string>("grant_type", "password"),
-                    new KeyValuePair<string, string>($"{api.EncabezadoUsuario}", userName),
-                    new KeyValuePair<string, string>($"{api.EncabezadoClave}", password)
+                    Username = userName,
+                    Password = password
                 };
 
-                // Realiza petición POST
-                ResponseDTO response = await apiUtil.SendRequestPostAsync(credenciales, api.RutaToken);
+                ResponseDTO respuestaToken = await apiUtil.SendRequestPostAsync(oData);
 
                 // Retorno de respuesta
                 return new LoginDTO()
                 {
-                    StatusCode = response.StatusCode,
-                    Message = response.StatusCode == 200 ? "Inicio de sesión exitoso" : "Error",
-                    Error = response.StatusCode != 200 ? JsonConvert.DeserializeObject<Api_SetErrorDTO>(response.Content) : new Api_SetErrorDTO()
+                    Token = respuestaToken.Content,
+                    StatusCode = respuestaToken.StatusCode,
+                    Message = respuestaToken.StatusCode == 200 ? "Inicio de sesión exitoso" : "Error",
+                    Error = respuestaToken.StatusCode != 200 ? JsonConvert.DeserializeObject<Api_SetErrorDTO>(respuestaToken.Content) : new Api_SetErrorDTO()
                 };
             }
             catch (Exception ex)
@@ -147,12 +138,11 @@ namespace Utilidades
                 ApiDTO api_token = new ApiDTO
                 {
                     // Identificador ruta
-                    Identificador = KeyConfig_API.Url_Login_Register
+                    Identificador = "Login.Register"
                 };
 
                 // Consulta en base de datos los datos del api y ejecuta el nivel de seguridad del api.
-                ApiUtil apiUtil = await ApiUtilFactory.GetApiUtil(api_token);
-
+                ApiUtil apiUtil = await ApiUtilFactory.GetApiUtil(api_token, model.Email, model.PasswordHash);
                 // Envia peticion POST
                 ResponseDTO response = await apiUtil.SendRequestPostAsync(model);
 

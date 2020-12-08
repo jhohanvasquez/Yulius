@@ -24,7 +24,6 @@ namespace Yulius.Client.Api.Controllers
             Session.Clear();
             Session.RemoveAll();
             Session.Abandon();
-            singleton.Dispose();
             return RedirectToAction("Index", "Home");
         }
 
